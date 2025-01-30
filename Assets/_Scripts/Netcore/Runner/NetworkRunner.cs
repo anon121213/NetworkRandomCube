@@ -2,20 +2,27 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Threading;
+using _Scripts.Netcore.Data.Attributes;
 using _Scripts.Netcore.Data.ConnectionData;
 using _Scripts.Netcore.Initializer;
+using _Scripts.Netcore.NetworkComponents.RPCComponents;
 using _Scripts.Netcore.RPCSystem;
+using _Scripts.Netcore.RPCSystem.ProcessorsData;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _Scripts.Netcore.Runner
 {
-    public class NetworkRunner : INetworkRunner, IDisposable
+    public class NetworkRunner : NetworkService, INetworkRunner, IDisposable
     {
         private readonly CancellationTokenSource _cts = new();
         private readonly IRpcListener _rpcListener;
+        private readonly MethodInfo _methodInfo = typeof(NetworkRunner).GetMethod(nameof(SetPlayerId));
 
+        private bool _isSettedPlayerId;
+        
         public Dictionary<int, Socket> ConnectedClients { get; } = new();
 
         public List<Socket> TcpClientSockets { get; } = new();
@@ -32,6 +39,8 @@ namespace _Scripts.Netcore.Runner
         
         public IPAddress ServerIp { get; private set; }
 
+        public int PlayerId { get; private set; }
+
         public event Action<int> OnPlayerConnected;
         public event Action OnServerStarted;
         public event Action OnClientStarted;
@@ -41,6 +50,7 @@ namespace _Scripts.Netcore.Runner
         {
             _rpcListener = rpcListener;
             networkInitializer.Initialize(this);
+            RPCInvoker.RegisterRPCInstance<NetworkRunner>(this);
         }
         
         public async UniTask StartServer(ConnectServerData connectServerData)
@@ -109,8 +119,20 @@ namespace _Scripts.Netcore.Runner
                     .AttachExternalCancellation(_cts.Token);
 
                 OnPlayerConnected?.Invoke(playerIndex);
+                await UniTask.Delay(1000);
+                RPCInvoker.InvokeServiceRPC<NetworkRunner>(this, _methodInfo, NetProtocolType.Tcp, playerIndex);
                 Debug.Log($"Клиент подключен: {clientSocket.RemoteEndPoint}");
             }
+        }
+
+        [ClientRPC]
+        public void SetPlayerId(int id)
+        {
+            if (_isSettedPlayerId)
+                return;
+            
+            _isSettedPlayerId = true;
+            PlayerId = id;
         }
 
         private void SetServerParameters(ConnectServerData data)

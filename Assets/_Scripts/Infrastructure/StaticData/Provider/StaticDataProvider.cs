@@ -7,8 +7,10 @@ namespace _Scripts.Infrastructure.StaticData.Provider
         public StaticDataProvider(AllData allData)
         {
             AssetsReferences = allData.AssetsReferences;
+            CubeDiceSettings = allData.CubeDiceSettings;
         }
 
         public AssetsReferences AssetsReferences { get; }
+        public CubeDiceSettings CubeDiceSettings { get; }
     }
 }

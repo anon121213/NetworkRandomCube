@@ -6,5 +6,6 @@ namespace _Scripts.Infrastructure.StaticData.Data
     public class AllData : ScriptableObject
     {
         public AssetsReferences AssetsReferences;
+        public CubeDiceSettings CubeDiceSettings;
     }
 }

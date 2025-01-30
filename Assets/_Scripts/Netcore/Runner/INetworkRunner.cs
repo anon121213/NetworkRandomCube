@@ -29,7 +29,8 @@ namespace _Scripts.Netcore.Runner
         int MaxClients { get; }
 
         bool IsServer { get; }
-        
+        int PlayerId { get; }
+
         IPAddress ServerIp { get; }
     }
 }

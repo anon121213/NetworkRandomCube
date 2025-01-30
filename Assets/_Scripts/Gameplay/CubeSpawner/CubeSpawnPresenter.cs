@@ -1,4 +1,5 @@
 ﻿using _Scripts.Gameplay.CubeRoller;
+using _Scripts.Gameplay.RollQueue;
 using UnityEngine;
 using VContainer;
 
@@ -9,15 +10,26 @@ namespace _Scripts.Gameplay.CubeSpawner
         [SerializeField] private CubeSpawnView _cubeSpawnView;
         
         private ICubeRoller _cubeRoller;
+        private IQueueService _queueService;
 
         [Inject]
-        public void Initialize(ICubeRoller cubeSpawner)
+        public void Initialize(ICubeRoller cubeSpawner,
+            IQueueService queueService)
         {
             _cubeRoller = cubeSpawner;
-            _cubeSpawnView.SpawnButton.onClick.AddListener(_cubeRoller.ThrowDice);
+            _queueService = queueService;
+            _cubeSpawnView.SpawnButton.onClick.AddListener(Roll);
         }
 
+        private void Roll()
+        {
+            if (!_queueService.CheckTurn())
+                return;
+            
+            _cubeRoller.Roll();
+        }
+        
         private void OnDestroy() => 
-            _cubeSpawnView.SpawnButton.onClick.RemoveListener(_cubeRoller.ThrowDice);
+            _cubeSpawnView.SpawnButton.onClick.RemoveListener(_cubeRoller.Roll);
     }
 }

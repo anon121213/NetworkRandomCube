@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using _Scripts.Gameplay.CubeComponent;
 using _Scripts.Netcore.Data.Attributes;
 using _Scripts.Netcore.NetworkComponents.RPCComponents;
 using _Scripts.Netcore.RPCSystem;
@@ -11,6 +12,7 @@ namespace _Scripts.Gameplay.CubeRoller
     public class CubeRoller : NetworkService, ICubeRoller
     {
         private readonly INetworkRunner _networkRunner;
+        private readonly ICubeRollerChecker _cubeRollerChecker;
         private readonly MethodInfo _methodInfo = typeof(CubeRoller).GetMethod(nameof(Throw));
         
         private const float _minThrowForce = 5f; 
@@ -20,16 +22,18 @@ namespace _Scripts.Gameplay.CubeRoller
 
         private Rigidbody rb;
 
-        public CubeRoller(INetworkRunner networkRunner)
+        public CubeRoller(INetworkRunner networkRunner,
+            ICubeRollerChecker cubeRollerChecker)
         {
             _networkRunner = networkRunner;
+            _cubeRollerChecker = cubeRollerChecker;
             RPCInvoker.RegisterRPCInstance<CubeRoller>(this);
         }
 
         public void Initialize(GameObject cube) => 
             rb = cube.GetComponent<Rigidbody>();
 
-        public void ThrowDice()
+        public void Roll()
         {
             if (_networkRunner.IsServer)
             {
@@ -52,12 +56,8 @@ namespace _Scripts.Gameplay.CubeRoller
             float torqueZ = Random.Range(_minTorqueForce, _maxTorqueForce);
 
             rb.AddTorque(new Vector3(torqueX, torqueY, torqueZ), ForceMode.Impulse);
+            
+            _cubeRollerChecker.StartRollingCheck();
         }
-    }
-
-    public interface ICubeRoller
-    {
-        void Initialize(GameObject cube);
-        void ThrowDice();
     }
 }

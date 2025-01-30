@@ -1,5 +1,7 @@
-﻿using _Scripts.Gameplay.CubeRoller;
+﻿using _Scripts.Gameplay.CubeComponent;
+using _Scripts.Gameplay.CubeRoller;
 using _Scripts.Gameplay.CubeSpawner;
+using _Scripts.Gameplay.RollQueue;
 using _Scripts.Infrastructure.AddressableLoader;
 using _Scripts.Infrastructure.ConnectWindow;
 using _Scripts.Infrastructure.Factory;
@@ -53,6 +55,8 @@ namespace _Scripts.Infrastructure.Installers
             builder.Register<ICubeSpawner, CubeSpawner>(Lifetime.Singleton);
             builder.Register<ISceneLoader, SceneLoader.SceneLoader>(Lifetime.Singleton);
             builder.Register<ICubeRoller, CubeRoller>(Lifetime.Singleton);
+            builder.Register<ICubeRollerChecker, CubeRollerChecker>(Lifetime.Singleton);
+            builder.Register<IQueueService, QueueService>(Lifetime.Singleton);
         }
     }
 }
