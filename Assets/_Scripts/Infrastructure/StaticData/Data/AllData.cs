@@ -7,5 +7,6 @@ namespace _Scripts.Infrastructure.StaticData.Data
     {
         public AssetsReferences AssetsReferences;
         public CubeDiceSettings CubeDiceSettings;
+        public CubeRollerSettings CubeRollerSettings;
     }
 }

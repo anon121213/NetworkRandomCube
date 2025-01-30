@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using _Scripts.Infrastructure.SceneLoader;
 using _Scripts.Netcore.Data.ConnectionData;
 using _Scripts.Netcore.Runner;

@@ -38,7 +38,7 @@ namespace _Scripts.Gameplay.RollQueue
         [ServerRPC]
         public void Change()
         {
-            if (TurnIndex.Value >= _networkRunner.MaxClients)
+            if (TurnIndex.Value >= _networkRunner.MaxClients - 1)
             {
                 TurnIndex.Value = 0;
                 OnTurnOver?.Invoke();

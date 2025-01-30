@@ -46,16 +46,6 @@ app.get("/delete-lobby", (req, res) => {
     }
 });
 
-setInterval(() => {
-    const before = Object.keys(lobbies).length;
-    for (const lobbyId in lobbies) {
-        if (!lobbies[lobbyId]) {
-            delete lobbies[lobbyId];
-        }
-    }
-    console.log(`Очищено ${before - Object.keys(lobbies).length} лобби`);
-}, 300000); // 300000 ms = 5 минут
-
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Lobby server running on port ${PORT}`);

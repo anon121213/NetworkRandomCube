@@ -8,9 +8,11 @@ namespace _Scripts.Infrastructure.StaticData.Provider
         {
             AssetsReferences = allData.AssetsReferences;
             CubeDiceSettings = allData.CubeDiceSettings;
+            CubeRollerSettings = allData.CubeRollerSettings;
         }
 
         public AssetsReferences AssetsReferences { get; }
         public CubeDiceSettings CubeDiceSettings { get; }
+        public CubeRollerSettings CubeRollerSettings { get; }
     }
 }

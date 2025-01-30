@@ -5,9 +5,9 @@ using VContainer;
 
 namespace _Scripts.Gameplay.CubeSpawner
 {
-    public class CubeSpawnPresenter : MonoBehaviour
+    public class CubeRollPresenter : MonoBehaviour
     {
-        [SerializeField] private CubeSpawnView _cubeSpawnView;
+        [SerializeField] private CubeRollView _cubeSpawnView;
         
         private ICubeRoller _cubeRoller;
         private IQueueService _queueService;
@@ -18,7 +18,7 @@ namespace _Scripts.Gameplay.CubeSpawner
         {
             _cubeRoller = cubeSpawner;
             _queueService = queueService;
-            _cubeSpawnView.SpawnButton.onClick.AddListener(Roll);
+            _cubeSpawnView.RollButton.onClick.AddListener(Roll);
         }
 
         private void Roll()
@@ -30,6 +30,6 @@ namespace _Scripts.Gameplay.CubeSpawner
         }
         
         private void OnDestroy() => 
-            _cubeSpawnView.SpawnButton.onClick.RemoveListener(_cubeRoller.Roll);
+            _cubeSpawnView.RollButton.onClick.RemoveListener(_cubeRoller.Roll);
     }
 }

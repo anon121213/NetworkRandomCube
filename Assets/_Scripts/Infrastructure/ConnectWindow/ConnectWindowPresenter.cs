@@ -31,7 +31,11 @@ namespace _Scripts.Infrastructure.ConnectWindow
             
             _connectView.CreateLobbyButton.onClick.AddListener(CreateLobby);
             _connectView.SearchLobbiesButton.onClick.AddListener(SearchLobbies);
+            _connectView.ClouseWindownButton.onClick.AddListener(ClouseWindow);
         }
+
+        private void ClouseWindow() => 
+            gameObject.SetActive(false);
 
         private async void SearchLobbies()
         {

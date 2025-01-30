@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using _Scripts.Gameplay.CubeComponent;
+using _Scripts.Infrastructure.StaticData.Provider;
 using _Scripts.Netcore.Data.Attributes;
 using _Scripts.Netcore.NetworkComponents.RPCComponents;
 using _Scripts.Netcore.RPCSystem;
@@ -13,24 +14,33 @@ namespace _Scripts.Gameplay.CubeRoller
     {
         private readonly INetworkRunner _networkRunner;
         private readonly ICubeRollerChecker _cubeRollerChecker;
+        private readonly IStaticDataProvider _staticDataProvider;
         private readonly MethodInfo _methodInfo = typeof(CubeRoller).GetMethod(nameof(Throw));
-        
-        private const float _minThrowForce = 5f; 
-        private const float _maxThrowForce = 15f; 
-        private const float _minTorqueForce = 5f; 
-        private const float _maxTorqueForce = 15f;
+
+        private readonly float _minThrowForce;
+        private readonly float _maxThrowForce;
+        private readonly float _minTorqueForce;
+        private readonly float _maxTorqueForce;
 
         private Rigidbody rb;
 
         public CubeRoller(INetworkRunner networkRunner,
-            ICubeRollerChecker cubeRollerChecker)
+            ICubeRollerChecker cubeRollerChecker,
+            IStaticDataProvider staticDataProvider)
         {
             _networkRunner = networkRunner;
             _cubeRollerChecker = cubeRollerChecker;
+            _staticDataProvider = staticDataProvider; 
+            
+            _minThrowForce = staticDataProvider.CubeRollerSettings.MinThrowForce;
+            _maxThrowForce = staticDataProvider.CubeRollerSettings.MaxThrowForce;
+            _minTorqueForce = staticDataProvider.CubeRollerSettings.MinTorqueForce;
+            _maxTorqueForce = staticDataProvider.CubeRollerSettings.MaxTorqueForce;
+            
             RPCInvoker.RegisterRPCInstance<CubeRoller>(this);
         }
 
-        public void Initialize(GameObject cube) => 
+        public void Initialize(GameObject cube) =>
             rb = cube.GetComponent<Rigidbody>();
 
         public void Roll()
@@ -40,7 +50,7 @@ namespace _Scripts.Gameplay.CubeRoller
                 Throw();
                 return;
             }
-            
+
             RPCInvoker.InvokeServiceRPC<CubeRoller>(this, _methodInfo, NetProtocolType.Tcp);
         }
 
@@ -56,7 +66,7 @@ namespace _Scripts.Gameplay.CubeRoller
             float torqueZ = Random.Range(_minTorqueForce, _maxTorqueForce);
 
             rb.AddTorque(new Vector3(torqueX, torqueY, torqueZ), ForceMode.Impulse);
-            
+
             _cubeRollerChecker.StartRollingCheck();
         }
     }

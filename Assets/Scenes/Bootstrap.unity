@@ -191,6 +191,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &491702186 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2457634794059311968, guid: a0daf35e2e9a9dc4cac19a0362b66312, type: 3}
+  m_PrefabInstance: {fileID: 8908251577759316127}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,6 +465,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1497290472287059815, guid: a0daf35e2e9a9dc4cac19a0362b66312, type: 3}
+      propertyPath: <RollButton>k__BackingField
+      value: 
+      objectReference: {fileID: 491702186}
     - target: {fileID: 1851151650691817437, guid: a0daf35e2e9a9dc4cac19a0362b66312, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -468,7 +483,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2670326862668862196, guid: a0daf35e2e9a9dc4cac19a0362b66312, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.00043619523
+      value: -0.00005478598
       objectReference: {fileID: 0}
     - target: {fileID: 3363487027893648040, guid: a0daf35e2e9a9dc4cac19a0362b66312, type: 3}
       propertyPath: m_Name

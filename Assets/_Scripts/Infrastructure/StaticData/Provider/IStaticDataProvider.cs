@@ -6,5 +6,6 @@ namespace _Scripts.Infrastructure.StaticData.Provider
     {
         AssetsReferences AssetsReferences { get; }
         CubeDiceSettings CubeDiceSettings { get; }
+        CubeRollerSettings CubeRollerSettings { get; }
     }
 }

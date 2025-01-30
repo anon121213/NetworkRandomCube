@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AssetsReferences: {fileID: 11400000, guid: 022ffc2b4e3e67048971e38c8a2bf312, type: 2}
   CubeDiceSettings: {fileID: 11400000, guid: be3d2d24dc6aec54b9acf48d9f9e0bdf, type: 2}
+  CubeRollerSettings: {fileID: 11400000, guid: 65baf8f8fe8c27c4e93676bb407a7780, type: 2}
