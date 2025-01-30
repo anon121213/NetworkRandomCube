@@ -1,11 +1,11 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using _Scripts.Netcore.Data.Attributes;
 using _Scripts.Netcore.NetworkComponents.NetworkVariableComponent;
 using _Scripts.Netcore.NetworkComponents.RPCComponents;
 using _Scripts.Netcore.RPCSystem;
 using _Scripts.Netcore.RPCSystem.ProcessorsData;
 using _Scripts.Netcore.Runner;
-using UnityEngine;
 
 namespace _Scripts.Gameplay.RollQueue
 {
@@ -14,8 +14,10 @@ namespace _Scripts.Gameplay.RollQueue
         private readonly INetworkRunner _networkRunner;
         private readonly MethodInfo _methodInfo = typeof(QueueService).GetMethod(nameof(Change));
 
-        public NetworkVariable<int> TurnIndex = new("TurnIndex", 0);
+        public NetworkVariable<int> TurnIndex { get; set; } = new("TurnIndex", 0);
 
+        public event Action OnTurnOver;
+        
         public QueueService(INetworkRunner networkRunner)
         {
             _networkRunner = networkRunner;
@@ -27,7 +29,6 @@ namespace _Scripts.Gameplay.RollQueue
 
         public void ChangeTurn()
         {
-            Debug.Log("Change");
             if (_networkRunner.IsServer)
                 Change();
             else
@@ -40,6 +41,7 @@ namespace _Scripts.Gameplay.RollQueue
             if (TurnIndex.Value >= _networkRunner.MaxClients)
             {
                 TurnIndex.Value = 0;
+                OnTurnOver?.Invoke();
                 return;
             }
 
@@ -49,7 +51,9 @@ namespace _Scripts.Gameplay.RollQueue
 
     public interface IQueueService
     {
+        NetworkVariable<int> TurnIndex { get; set; }
         bool CheckTurn();
         void ChangeTurn();
+        event Action OnTurnOver;
     }
 }

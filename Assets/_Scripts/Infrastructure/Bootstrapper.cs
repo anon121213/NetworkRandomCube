@@ -3,6 +3,7 @@ using _Scripts.Gameplay.CubeComponent;
 using _Scripts.Gameplay.CubeRoller;
 using _Scripts.Gameplay.CubeSpawner;
 using _Scripts.Gameplay.RollQueue;
+using _Scripts.Gameplay.WinSystem;
 using _Scripts.Infrastructure.SceneLoader;
 using _Scripts.Infrastructure.WarmupSystem;
 using _Scripts.Netcore.Runner;
@@ -21,9 +22,10 @@ namespace _Scripts.Infrastructure
         private readonly ICubeRoller _cubeRoller;
         private readonly ICubeRollerChecker _cubeRollerChecker;
         private readonly IQueueService _queueService;
+        private readonly IWinService _winService;
 
         private Action<int> _onPlayerConnectedAction;
-        private Action<int> _onChandeDice;
+        private Action<int> _onChangeDice;
 
         public Bootstrapper(IWarmupService warmupService,
             INetworkRunner networkRunner,
@@ -32,7 +34,8 @@ namespace _Scripts.Infrastructure
             ICubeSpawner cubeSpawner,
             ICubeRoller cubeRoller,
             ICubeRollerChecker cubeRollerChecker,
-            IQueueService queueService)
+            IQueueService queueService,
+            IWinService winService)
         {
             _warmupService = warmupService;
             _networkRunner = networkRunner;
@@ -42,6 +45,7 @@ namespace _Scripts.Infrastructure
             _cubeRoller = cubeRoller;
             _cubeRollerChecker = cubeRollerChecker;
             _queueService = queueService;
+            _winService = winService;
         }
         
         public async void Initialize()
@@ -49,12 +53,14 @@ namespace _Scripts.Infrastructure
             await _warmupService.Warmup();
 
             _onPlayerConnectedAction = _ => Sync();
-            _onChandeDice = _ => _queueService.ChangeTurn();
+            _onChangeDice = _ => _queueService.ChangeTurn();
 
             _networkRunner.OnClientStarted += LoadMainScene;
             _networkRunner.OnServerStarted += LoadMainScene;
             _networkRunner.OnPlayerConnected += _onPlayerConnectedAction;
-            _cubeRollerChecker.OnChangeDiceValue += _onChandeDice;
+            _networkRunner.OnPlayerConnected += _winService.AddPlayer;
+            _cubeRollerChecker.OnChangeDiceValue += _winService.ChangeScores;
+            _cubeRollerChecker.OnChangeDiceValue += _onChangeDice;
         }
 
         private async void LoadMainScene()
@@ -63,7 +69,8 @@ namespace _Scripts.Infrastructure
 
             if (!_networkRunner.IsServer) 
                 return;
-            
+
+            _winService.AddPlayer(0);
             var cube = await _cubeSpawner.Spawn();
             _cubeRoller.Initialize(cube);
             _cubeRollerChecker.Initialize(cube);
@@ -77,7 +84,9 @@ namespace _Scripts.Infrastructure
             _networkRunner.OnClientStarted -= LoadMainScene;
             _networkRunner.OnServerStarted -= LoadMainScene;
             _networkRunner.OnPlayerConnected -= _onPlayerConnectedAction;
-            _cubeRollerChecker.OnChangeDiceValue -= _onChandeDice;
+            _cubeRollerChecker.OnChangeDiceValue -= _onChangeDice;
+            _networkRunner.OnPlayerConnected -= _winService.AddPlayer;
+            _cubeRollerChecker.OnChangeDiceValue -= _winService.ChangeScores;
         }
     }
 }
