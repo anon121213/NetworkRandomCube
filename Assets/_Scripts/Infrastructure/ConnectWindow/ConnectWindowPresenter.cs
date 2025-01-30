@@ -1,12 +1,8 @@
-﻿using System.Reflection;
-using _Scripts.Infrastructure.ConnectWindow.Lobbies;
-using _Scripts.Infrastructure.ConnectWindow.Lobbys;
+﻿using _Scripts.Infrastructure.ConnectWindow.Lobbies;
 using _Scripts.Infrastructure.Factory;
 using _Scripts.Infrastructure.LobbySystem;
-using _Scripts.Netcore.Data.Attributes;
+using _Scripts.Infrastructure.SceneLoader;
 using _Scripts.Netcore.Data.ConnectionData;
-using _Scripts.Netcore.NetworkComponents.RPCComponents;
-using _Scripts.Netcore.RPCSystem;
 using _Scripts.Netcore.Runner;
 using UnityEngine;
 using VContainer;
@@ -20,15 +16,18 @@ namespace _Scripts.Infrastructure.ConnectWindow
         private INetworkRunner _networkRunner;
         private ILobbyManager _lobbyManager;
         private ILobbyPanelFactory _lobbyPanelFactory;
+        private ISceneLoader _sceneLoader;
 
         [Inject]
         public void Initialize(INetworkRunner networkRunner,
             ILobbyManager lobbyManager,
-            ILobbyPanelFactory lobbyPanelFactory)
+            ILobbyPanelFactory lobbyPanelFactory,
+            ISceneLoader sceneLoader)
         {
             _networkRunner = networkRunner;
             _lobbyManager = lobbyManager;
             _lobbyPanelFactory = lobbyPanelFactory;
+            _sceneLoader = sceneLoader;
             
             _connectView.CreateLobbyButton.onClick.AddListener(CreateLobby);
             _connectView.SearchLobbiesButton.onClick.AddListener(SearchLobbies);
@@ -59,7 +58,9 @@ namespace _Scripts.Infrastructure.ConnectWindow
             };
 
             await _networkRunner.StartServer(serverData);
-
+            await _sceneLoader.Load("MainScene");
+            
+            gameObject.SetActive(false);
             _lobbyManager.AddLobbyAsync(_networkRunner.ServerIp.ToString(), serverData.TcpPort, serverData.UdpPort);
         }
     }

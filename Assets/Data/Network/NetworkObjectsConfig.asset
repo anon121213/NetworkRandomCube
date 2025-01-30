@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: NetworkObjectsConfig
   m_EditorClassIdentifier: 
   _NetworkObjects:
-  - {fileID: 2813322995718770471, guid: f2f97f7f3e2a49c4c9bc7a85d18e2f36, type: 3}
+  - {fileID: 1697507471846405182, guid: 74f636dca6364994690fc158aa6df2e7, type: 3}

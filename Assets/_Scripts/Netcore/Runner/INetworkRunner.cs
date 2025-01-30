@@ -13,6 +13,8 @@ namespace _Scripts.Netcore.Runner
         UniTask StartClient(ConnectClientData connectClientData);
 
         event Action<int> OnPlayerConnected;
+        event Action OnServerStarted;
+        event Action OnClientStarted;
 
         Dictionary<int, Socket> ConnectedClients { get; }
 

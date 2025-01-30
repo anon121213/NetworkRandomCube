@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using _Scripts.Infrastructure.LobbySystem.Data;
 using Cysharp.Threading.Tasks;
 
 namespace _Scripts.Infrastructure.LobbySystem

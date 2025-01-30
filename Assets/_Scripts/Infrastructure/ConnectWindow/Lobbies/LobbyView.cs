@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Scripts.Infrastructure.ConnectWindow.Lobbys
+namespace _Scripts.Infrastructure.ConnectWindow.Lobbies
 {
     public class LobbyView : MonoBehaviour
     {

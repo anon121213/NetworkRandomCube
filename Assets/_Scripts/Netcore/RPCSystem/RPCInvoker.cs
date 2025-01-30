@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Linq;
-using System.Net.Sockets;
 using System.Reflection;
 using _Scripts.Netcore.Data.Attributes;
 using _Scripts.Netcore.Data.Message;
 using _Scripts.Netcore.NetworkComponents.RPCComponents;
 using _Scripts.Netcore.RPCSystem.Callers;
-using _Scripts.Netcore.RPCSystem.DynamicProcessor;
 using _Scripts.Netcore.RPCSystem.Processors;
 using _Scripts.Netcore.RPCSystem.ProcessorsData;
 using MessagePack;
@@ -14,7 +12,7 @@ using UnityEngine;
 
 namespace _Scripts.Netcore.RPCSystem
 {
-    public class RPCInvoker
+    public static class RPCInvoker
     {
         private static ICallerService _callerService;
         private static IRPCSendProcessor _sendProcessor;

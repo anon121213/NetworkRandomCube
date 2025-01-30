@@ -9,11 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 602bd50dd16f40bc83f278936f5a25ad, type: 3}
   m_Name: AssetsReferences
-  m_EditorClassIdentifier: Assembly-CSharp:_Scripts.Infrastructure.StaticData:AssetsReferences
+  m_EditorClassIdentifier: 
   <ConnectPanel>k__BackingField:
     m_AssetGUID: d610692eb56d09143869b692ad37cdfd
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  <Cube>k__BackingField:
+    m_AssetGUID: 74f636dca6364994690fc158aa6df2e7
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0

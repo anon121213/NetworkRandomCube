@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _Scripts.Infrastructure.AddressableLoader;
 using _Scripts.Infrastructure.StaticData;
+using _Scripts.Infrastructure.StaticData.Provider;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 

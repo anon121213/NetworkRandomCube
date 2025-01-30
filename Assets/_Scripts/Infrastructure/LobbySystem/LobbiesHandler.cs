@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Text;
+using _Scripts.Infrastructure.LobbySystem.Data;
 
 namespace _Scripts.Infrastructure.LobbySystem
 {

@@ -1,8 +1,14 @@
-﻿using _Scripts.Infrastructure.AddressableLoader;
+﻿using _Scripts.Gameplay.CubeRoller;
+using _Scripts.Gameplay.CubeSpawner;
+using _Scripts.Infrastructure.AddressableLoader;
 using _Scripts.Infrastructure.ConnectWindow;
 using _Scripts.Infrastructure.Factory;
 using _Scripts.Infrastructure.LobbySystem;
+using _Scripts.Infrastructure.SceneLoader;
 using _Scripts.Infrastructure.StaticData;
+using _Scripts.Infrastructure.StaticData.Data;
+using _Scripts.Infrastructure.StaticData.Provider;
+using _Scripts.Infrastructure.WarmupSystem;
 using _Scripts.Netcore.Data.NetworkObjects;
 using _Scripts.Netcore.FormatterSystem;
 using _Scripts.Netcore.Initializer;
@@ -43,6 +49,10 @@ namespace _Scripts.Infrastructure.Installers
             builder.Register<IStaticDataProvider, StaticDataProvider>(Lifetime.Singleton).WithParameter(_allData);
             builder.Register<ILobbyPanelFactory, LobbyPanelFactory>(Lifetime.Singleton);
             builder.Register<IAssetProvider, AssetProvider>(Lifetime.Singleton);
+            builder.Register<IWarmupService, WarmupService>(Lifetime.Singleton);
+            builder.Register<ICubeSpawner, CubeSpawner>(Lifetime.Singleton);
+            builder.Register<ISceneLoader, SceneLoader.SceneLoader>(Lifetime.Singleton);
+            builder.Register<ICubeRoller, CubeRoller>(Lifetime.Singleton);
         }
     }
 }

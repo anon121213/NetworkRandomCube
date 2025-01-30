@@ -33,6 +33,8 @@ namespace _Scripts.Netcore.Runner
         public IPAddress ServerIp { get; private set; }
 
         public event Action<int> OnPlayerConnected;
+        public event Action OnServerStarted;
+        public event Action OnClientStarted;
 
         public NetworkRunner(IRpcListener rpcListener,
             INetworkInitializer networkInitializer)
@@ -60,6 +62,8 @@ namespace _Scripts.Netcore.Runner
 
             Console.WriteLine("Сервер ожидает подключения...");
 
+            OnServerStarted?.Invoke();
+            
             WaitConnectClients(remoteEndPoint).Forget();
         }
 
@@ -80,6 +84,8 @@ namespace _Scripts.Netcore.Runner
             
             UniTask.RunOnThreadPool(() => _rpcListener.ListenForUdpRpcCalls(UdpServerSocket, remoteEndPoint, _cts.Token))
                 .AttachExternalCancellation(_cts.Token);
+            
+            OnClientStarted?.Invoke();
         }
 
         private async UniTaskVoid WaitConnectClients(IPEndPoint remoteEndPoint)

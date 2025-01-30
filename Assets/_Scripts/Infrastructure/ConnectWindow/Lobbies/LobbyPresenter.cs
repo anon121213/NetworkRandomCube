@@ -1,5 +1,6 @@
-﻿using System.Net;
-using _Scripts.Infrastructure.ConnectWindow.Lobbys;
+﻿using System;
+using System.Net;
+using _Scripts.Infrastructure.SceneLoader;
 using _Scripts.Netcore.Data.ConnectionData;
 using _Scripts.Netcore.Runner;
 using UnityEngine;
@@ -16,10 +17,13 @@ namespace _Scripts.Infrastructure.ConnectWindow.Lobbies
         private string _ip;
         private int _tcpPort;
         private int _udpPort;
+        private ISceneLoader _sceneLoader;
 
         [Inject]
-        public void Initialize(INetworkRunner networkRunner)
+        public void Initialize(INetworkRunner networkRunner,
+            ISceneLoader sceneLoader)
         {
+            _sceneLoader = sceneLoader;
             _networkRunner = networkRunner;
             _lobbyView.ConnectButton.onClick.AddListener(Connect);
         }
@@ -43,6 +47,9 @@ namespace _Scripts.Infrastructure.ConnectWindow.Lobbies
             };
             
             await _networkRunner.StartClient(clientData);
+            await _sceneLoader.Load("MainScene");
+            
+            gameObject.SetActive(false);
         }
     }
 }
