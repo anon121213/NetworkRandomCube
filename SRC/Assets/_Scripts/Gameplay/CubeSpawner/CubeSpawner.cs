@@ -1,5 +1,4 @@
-﻿using System;
-using _Scripts.Infrastructure.AddressableLoader;
+﻿using _Scripts.Infrastructure.AddressableLoader;
 using _Scripts.Infrastructure.StaticData.Provider;
 using _Scripts.Netcore.NetworkComponents.RPCComponents;
 using _Scripts.Netcore.Spawner;
@@ -25,8 +24,7 @@ namespace _Scripts.Gameplay.CubeSpawner
         
         public async UniTask<GameObject> Spawn()
         {
-            GameObject cube = await _assetProvider.LoadAsync<GameObject>(_staticDataProvider.AssetsReferences.Cube);
-            return _networkSpawner.Spawn(cube, new Vector3(0, 10, 0));
+            return await _networkSpawner.Spawn(_staticDataProvider.AssetsReferences.Cube, new Vector3(0, 10, 0));
         }
     }
 

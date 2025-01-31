@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: Cube
   m_Data:
     m_SerializedData: []
-  m_GUID: ff9a991d847172342a7d971a24d583f8
+  m_GUID: 78f2917dc74624843ac60e8443d9953f
   m_SerializeEntries:
   - m_GUID: 74f636dca6364994690fc158aa6df2e7
     m_Address: Assets/Prefabs/Cube.prefab
@@ -25,4 +25,6 @@ MonoBehaviour:
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: c16079346e288604b9c4d2c9968c4797, type: 2}
   m_SchemaSet:
-    m_Schemas: []
+    m_Schemas:
+    - {fileID: 11400000, guid: 7afbe99cab941da488c7abb93d3ad55d, type: 2}
+    - {fileID: 11400000, guid: aff48cc407de62440ad83a8d89c2aef9, type: 2}

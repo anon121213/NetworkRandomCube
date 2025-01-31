@@ -46,7 +46,7 @@ namespace _Scripts.Infrastructure.ConnectWindow.Lobbies
             };
             
             await _networkRunner.StartClient(clientData);
-            await _sceneLoader.Load("MainScene");
+            //await _sceneLoader.Load("MainScene");
             
             gameObject.SetActive(false);
         }

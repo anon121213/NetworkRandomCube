@@ -1,5 +1,4 @@
-﻿using _Scripts.Netcore.Data.NetworkObjects;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace _Scripts.Infrastructure.StaticData.Data
 {
@@ -9,6 +8,5 @@ namespace _Scripts.Infrastructure.StaticData.Data
         public AssetsReferences AssetsReferences;
         public CubeDiceSettings CubeDiceSettings;
         public CubeRollerSettings CubeRollerSettings;
-        public NetworkObjectsConfig NetworkObjectsConfig;
     }
 }

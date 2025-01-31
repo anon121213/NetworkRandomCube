@@ -1,4 +1,5 @@
-﻿using MessagePack;
+﻿using _Scripts.Netcore.FormatterSystem.Formatters;
+using MessagePack;
 using MessagePack.Formatters;
 using MessagePack.Resolvers;
 using QuaternionFormatter = _Scripts.Netcore.FormatterSystem.Formatters.QuaternionFormatter;
@@ -14,6 +15,7 @@ namespace _Scripts.Netcore.FormatterSystem
             {
                 new Vector3Formatter(),
                 new QuaternionFormatter(),
+                new AssetReferenceGameObjectFormatter()
             };
 
             var resolvers = new IFormatterResolver[]

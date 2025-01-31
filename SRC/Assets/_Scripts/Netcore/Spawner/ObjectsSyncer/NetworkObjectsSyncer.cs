@@ -4,15 +4,16 @@ using System.Reflection;
 using _Scripts.Netcore.RPCSystem;
 using _Scripts.Netcore.RPCSystem.ProcessorsData;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace _Scripts.Netcore.Spawner.ObjectsSyncer
 {
     public class NetworkObjectsSyncer : INetworkObjectSyncer
     {
-        private readonly List<(int, int, GameObject)> _networkObjects = new();
+        private readonly List<(AssetReferenceGameObject, int, GameObject)> _networkObjects = new();
         private MethodInfo _spawnMethodInfo;
 
-        public void AddNetworkObject(int objectId, int uniqueId, GameObject gameObject) => 
+        public void AddNetworkObject(AssetReferenceGameObject objectId, int uniqueId, GameObject gameObject) => 
             _networkObjects.Add((objectId, uniqueId, gameObject));
 
         public void RemoveNetworkObject(int objectId, GameObject gameObject)
@@ -20,7 +21,7 @@ namespace _Scripts.Netcore.Spawner.ObjectsSyncer
             
         }
 
-        public bool CheckSyncObject(int prefabId, int uniqueId) =>
+        public bool CheckSyncObject(AssetReferenceGameObject prefabId, int uniqueId) =>
             _networkObjects.Any(networkObject => 
                 networkObject.Item1 == prefabId && networkObject.Item2 == uniqueId);
 
@@ -38,7 +39,7 @@ namespace _Scripts.Netcore.Spawner.ObjectsSyncer
     public interface INetworkObjectSyncer
     {
         void Sync(NetworkSpawner networkSpawner);
-        void AddNetworkObject(int objectId, int uniqueId, GameObject gameObject);
-        bool CheckSyncObject(int prefabId, int uniqueId);
+        void AddNetworkObject(AssetReferenceGameObject objectId, int uniqueId, GameObject gameObject);
+        bool CheckSyncObject(AssetReferenceGameObject prefabId, int uniqueId);
     }
 }

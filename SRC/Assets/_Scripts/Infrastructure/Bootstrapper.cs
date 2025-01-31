@@ -7,7 +7,9 @@ using _Scripts.Gameplay.CubeRoller;
 using _Scripts.Gameplay.CubeSpawner;
 using _Scripts.Gameplay.RollQueue;
 using _Scripts.Gameplay.WinSystem;
+using _Scripts.Infrastructure.AddressableLoader;
 using _Scripts.Infrastructure.SceneLoader;
+using _Scripts.Infrastructure.StaticData.Provider;
 using _Scripts.Infrastructure.WarmupSystem;
 using _Scripts.Netcore.Runner;
 using _Scripts.Netcore.Spawner;
@@ -27,6 +29,8 @@ namespace _Scripts.Infrastructure
         private readonly ICubeRollerChecker _cubeRollerChecker;
         private readonly IQueueService _queueService;
         private readonly IWinService _winService;
+        private readonly IAssetProvider _assetProvider;
+        private readonly IStaticDataProvider _staticDataProvider;
 
         private Action<int> _onPlayerConnectedAction;
         private Action<int> _onChangeDice;
@@ -41,7 +45,9 @@ namespace _Scripts.Infrastructure
             ICubeRoller cubeRoller,
             ICubeRollerChecker cubeRollerChecker,
             IQueueService queueService,
-            IWinService winService)
+            IWinService winService,
+            IAssetProvider assetProvider,
+            IStaticDataProvider staticDataProvider)
         {
             _warmupService = warmupService;
             _networkRunner = networkRunner;
@@ -52,11 +58,13 @@ namespace _Scripts.Infrastructure
             _cubeRollerChecker = cubeRollerChecker;
             _queueService = queueService;
             _winService = winService;
+            _assetProvider = assetProvider;
+            _staticDataProvider = staticDataProvider;
         }
         
         public async void Initialize()
         {
-            //await _warmupService.Warmup();
+            await _warmupService.Warmup();
 
             _onPlayerConnectedAction = _ => Sync();
             _onChangeDice = _ => _queueService.ChangeTurn();
@@ -74,7 +82,7 @@ namespace _Scripts.Infrastructure
         private async void LoadMainScene()
         {
             await _sceneLoader.Load("MainScene");
-
+            
             if (!_networkRunner.IsServer) 
                 return;
 

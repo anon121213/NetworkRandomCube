@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using _Scripts.Infrastructure.StaticData.Provider;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace _Scripts.Infrastructure.AddressableLoader
@@ -10,13 +11,6 @@ namespace _Scripts.Infrastructure.AddressableLoader
     public class AssetProvider : IAssetProvider
     {
         private readonly Dictionary<string, List<AsyncOperationHandle>> _usedResources = new();
-
-        public async UniTask InitializeAsset()
-        {
-            AsyncOperationHandle<IResourceLocator> asyncOperation = Addressables.InitializeAsync();
-
-            await asyncOperation.Task;
-        }
 
         public async UniTask<T> LoadAsync<T>(string address) where T : class
         {
@@ -70,7 +64,6 @@ namespace _Scripts.Infrastructure.AddressableLoader
 
     public interface IAssetProvider
     {
-        UniTask InitializeAsset();
         UniTask<T> LoadAsync<T>(string address) where T : class;
         UniTask<T> LoadAsync<T>(AssetReference assetReference) where T : class;
         UniTask<List<T>> LoadAssetsByLabelAsync<T>(string label) where T : class;

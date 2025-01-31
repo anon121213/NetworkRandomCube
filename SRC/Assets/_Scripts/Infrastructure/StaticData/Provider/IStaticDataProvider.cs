@@ -1,5 +1,4 @@
 using _Scripts.Infrastructure.StaticData.Data;
-using _Scripts.Netcore.Data.NetworkObjects;
 
 namespace _Scripts.Infrastructure.StaticData.Provider
 {
@@ -8,6 +7,5 @@ namespace _Scripts.Infrastructure.StaticData.Provider
         AssetsReferences AssetsReferences { get; }
         CubeDiceSettings CubeDiceSettings { get; }
         CubeRollerSettings CubeRollerSettings { get; }
-        NetworkObjectsConfig NetworkObjectsConfig { get; }
     }
 }

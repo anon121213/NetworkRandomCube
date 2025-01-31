@@ -4,15 +4,12 @@ using _Scripts.Gameplay.CubeSpawner;
 using _Scripts.Gameplay.RollQueue;
 using _Scripts.Gameplay.WinSystem;
 using _Scripts.Infrastructure.AddressableLoader;
-using _Scripts.Infrastructure.ConnectWindow;
 using _Scripts.Infrastructure.Factory;
 using _Scripts.Infrastructure.LobbySystem;
 using _Scripts.Infrastructure.SceneLoader;
-using _Scripts.Infrastructure.StaticData;
 using _Scripts.Infrastructure.StaticData.Data;
 using _Scripts.Infrastructure.StaticData.Provider;
 using _Scripts.Infrastructure.WarmupSystem;
-using _Scripts.Netcore.Data.NetworkObjects;
 using _Scripts.Netcore.FormatterSystem;
 using _Scripts.Netcore.Initializer;
 using _Scripts.Netcore.RPCSystem;
@@ -30,7 +27,6 @@ namespace _Scripts.Infrastructure.Installers
 {
     public class MainInstaller : LifetimeScope
     {
-        [SerializeField] private NetworkObjectsConfig _networkObjectsConfig;
         [SerializeField] private AllData _allData;
         
         protected override void Configure(IContainerBuilder builder)
