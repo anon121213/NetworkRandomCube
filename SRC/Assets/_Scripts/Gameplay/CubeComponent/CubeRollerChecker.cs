@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading;
+using _Scripts.Gameplay.CubeComponent.Data;
 using _Scripts.Infrastructure.StaticData.Provider;
+using _Scripts.Netcore.NetworkComponents.NetworkVariableComponent;
 using _Scripts.Netcore.NetworkComponents.RPCComponents;
 using _Scripts.Netcore.Runner;
 using Cysharp.Threading.Tasks;
@@ -15,8 +17,8 @@ namespace _Scripts.Gameplay.CubeComponent
 
         private CancellationTokenSource _cancellationTokenSource;
         private Rigidbody _rb;
-        
-        private bool _isRolling = true;
+
+        public NetworkVariable<bool> IsRolling { get; set; } = new("IsRolling", false);
         private const float _stopThreshold = 0.03f;
 
         public event Action<int> OnChangeDiceValue;
@@ -54,11 +56,11 @@ namespace _Scripts.Gameplay.CubeComponent
             
             while (!token.IsCancellationRequested)
             {
-                if (_isRolling)
+                if (IsRolling.Value)
                 {
                     if (_rb.velocity.magnitude < _stopThreshold && _rb.angularVelocity.magnitude < _stopThreshold)
                     {
-                        _isRolling = false;
+                        IsRolling.Value = false;
                         int result = GetDiceValue();
                         OnChangeDiceValue?.Invoke(result);
                         Debug.Log($"Выпавший номер: {result}");
@@ -66,7 +68,7 @@ namespace _Scripts.Gameplay.CubeComponent
                     }
                 }
                 else if (_rb.velocity.magnitude >= _stopThreshold || _rb.angularVelocity.magnitude >= _stopThreshold)
-                        _isRolling = true;
+                        IsRolling.Value = true;
 
                 await UniTask.Delay(TimeSpan.FromSeconds(1), cancellationToken: token);
             }

@@ -14,7 +14,6 @@ namespace _Scripts.Gameplay.CubeRoller
     {
         private readonly INetworkRunner _networkRunner;
         private readonly ICubeRollerChecker _cubeRollerChecker;
-        private readonly IStaticDataProvider _staticDataProvider;
         private readonly MethodInfo _methodInfo = typeof(CubeRoller).GetMethod(nameof(Throw));
 
         private readonly float _minThrowForce;
@@ -30,7 +29,6 @@ namespace _Scripts.Gameplay.CubeRoller
         {
             _networkRunner = networkRunner;
             _cubeRollerChecker = cubeRollerChecker;
-            _staticDataProvider = staticDataProvider; 
             
             _minThrowForce = staticDataProvider.CubeRollerSettings.MinThrowForce;
             _maxThrowForce = staticDataProvider.CubeRollerSettings.MaxThrowForce;

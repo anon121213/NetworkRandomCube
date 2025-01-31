@@ -1,4 +1,5 @@
 using _Scripts.Gameplay.CubeComponent;
+using _Scripts.Gameplay.CubeComponent.Data;
 using UnityEngine;
 
 namespace _Scripts.Infrastructure.StaticData.Data

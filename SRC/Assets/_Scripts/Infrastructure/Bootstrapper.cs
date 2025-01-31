@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using _Scripts.Gameplay.Bot;
 using _Scripts.Gameplay.CubeComponent;
 using _Scripts.Gameplay.CubeRoller;
 using _Scripts.Gameplay.CubeSpawner;
@@ -8,6 +10,7 @@ using _Scripts.Infrastructure.SceneLoader;
 using _Scripts.Infrastructure.WarmupSystem;
 using _Scripts.Netcore.Runner;
 using _Scripts.Netcore.Spawner;
+using UnityEngine;
 using VContainer.Unity;
 
 namespace _Scripts.Infrastructure
@@ -26,6 +29,8 @@ namespace _Scripts.Infrastructure
 
         private Action<int> _onPlayerConnectedAction;
         private Action<int> _onChangeDice;
+
+        private readonly List<IBot> _bots = new();
 
         public Bootstrapper(IWarmupService warmupService,
             INetworkRunner networkRunner,
@@ -58,6 +63,8 @@ namespace _Scripts.Infrastructure
             _networkRunner.OnClientStarted += LoadMainScene;
             _networkRunner.OnServerStarted += LoadMainScene;
             _networkRunner.OnPlayerConnected += _onPlayerConnectedAction;
+            _networkRunner.OnPlayerConnected += DisableBot;
+            _networkRunner.OnPlayerConnected += _winService.RemovePlayer;
             _networkRunner.OnPlayerConnected += _winService.AddPlayer;
             _cubeRollerChecker.OnChangeDiceValue += _winService.ChangeScores;
             _cubeRollerChecker.OnChangeDiceValue += _onChangeDice;
@@ -74,6 +81,27 @@ namespace _Scripts.Infrastructure
             var cube = await _cubeSpawner.Spawn();
             _cubeRoller.Initialize(cube);
             _cubeRollerChecker.Initialize(cube);
+            CreateBots();
+        }
+
+        private void CreateBots()
+        {
+            for (int i = 1; i < _networkRunner.MaxClients; i++)
+            {
+                Debug.Log($"createBot {i}");
+                IBot bot = new Bot(_cubeRoller, _queueService, i);
+                bot.EnableBot();
+                _bots.Add(bot);
+                _winService.AddPlayer(i);
+            }
+        }
+
+        private void DisableBot(int id)
+        {
+            if (_bots.Count < id)
+                return;
+            
+            _bots[id - 1].DisableBot();
         }
 
         private void Sync() => 

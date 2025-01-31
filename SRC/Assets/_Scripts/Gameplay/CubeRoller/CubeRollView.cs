@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Scripts.Gameplay.CubeSpawner
+namespace _Scripts.Gameplay.CubeRoller
 {
     public class CubeRollView : MonoBehaviour
     {

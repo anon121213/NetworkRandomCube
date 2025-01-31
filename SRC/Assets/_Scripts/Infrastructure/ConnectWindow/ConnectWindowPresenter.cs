@@ -56,7 +56,7 @@ namespace _Scripts.Infrastructure.ConnectWindow
         {
             ConnectServerData serverData = new ConnectServerData
             {
-                MaxClients = 2,
+                MaxClients = 3,
                 TcpPort = 5055,
                 UdpPort = 5057
             };

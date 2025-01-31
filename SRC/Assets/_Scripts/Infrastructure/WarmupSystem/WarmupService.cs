@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using _Scripts.Infrastructure.AddressableLoader;
-using _Scripts.Infrastructure.StaticData;
 using _Scripts.Infrastructure.StaticData.Provider;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -24,8 +23,7 @@ namespace _Scripts.Infrastructure.WarmupSystem
             List<UniTask> tasks = new List<UniTask>
             {
                 _assetProvider.InitializeAsset(),
-                _assetProvider.LoadAsync<GameObject>(_staticDataProvider.AssetsReferences.ConnectPanel),
-                _assetProvider.LoadAsync<GameObject>(_staticDataProvider.AssetsReferences.Cube)
+                _assetProvider.LoadAsync<GameObject>(_staticDataProvider.AssetsReferences.ConnectPanel)
             };
 
             await UniTask.WhenAll(tasks);

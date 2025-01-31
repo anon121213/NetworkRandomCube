@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace _Scripts.Gameplay.CubeComponent
+namespace _Scripts.Gameplay.CubeComponent.Data
 {
     [Serializable]
     public struct CubeFace

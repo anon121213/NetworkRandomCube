@@ -1,4 +1,5 @@
 using System;
+using _Scripts.Netcore.NetworkComponents.NetworkVariableComponent;
 using UnityEngine;
 
 namespace _Scripts.Gameplay.CubeComponent
@@ -9,5 +10,6 @@ namespace _Scripts.Gameplay.CubeComponent
         void StartRollingCheck();
         void StopRollingCheck();
         event Action<int> OnChangeDiceValue;
+        NetworkVariable<bool> IsRolling { get; set; }
     }
 }

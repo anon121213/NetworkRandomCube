@@ -1,6 +1,6 @@
 using System;
 
-namespace _Scripts.Gameplay.CubeComponent
+namespace _Scripts.Gameplay.CubeComponent.Data
 {
     [Serializable]
     public enum CubeFaceDirection

@@ -85,11 +85,8 @@ namespace _Scripts.Gameplay.WinSystem
         }
         
         [ClientRPC]
-        public void Restart()
-        {
-            Debug.Log("restart");
+        public void Restart() => 
             _winView.gameObject.SetActive(false);
-        }
 
         [ServerRPC]
         public void RestartServerRpc()

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using _Scripts.Gameplay.RollQueue;
+using Unity.VisualScripting;
 
 namespace _Scripts.Gameplay.WinSystem
 {
@@ -17,6 +18,14 @@ namespace _Scripts.Gameplay.WinSystem
 
         public void AddPlayer(int id) =>
             _playersScores.Add((id, 0));
+
+        public void RemovePlayer(int id)
+        {
+            if (_playersScores.Count < id)
+                return;
+            
+            _playersScores.Remove(_playersScores[id]);
+        }
 
         public void ChangeScores(int score)
         {
@@ -66,6 +75,7 @@ namespace _Scripts.Gameplay.WinSystem
     public interface IWinService
     {
         void AddPlayer(int id);
+        void RemovePlayer(int id);
         void ChangeScores(int score);
         int GetWinner(out bool isTied, out List<int> tiedPlayers);
     }
