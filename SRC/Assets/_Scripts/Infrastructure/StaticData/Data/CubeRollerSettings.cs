@@ -1,14 +1,10 @@
-using _Scripts.Gameplay.CubeComponent;
-using _Scripts.Gameplay.CubeComponent.Data;
 using UnityEngine;
 
 namespace _Scripts.Infrastructure.StaticData.Data
 {
-    [CreateAssetMenu(fileName = "CubeDiceSettings", menuName = "Data/CubeRollerSettings")]
+    [CreateAssetMenu(fileName = "CubeRollerSettings", menuName = "Data/CubeRollerSettings")]
     public class CubeRollerSettings : ScriptableObject
     {
-        [field: SerializeField] public CubeFace[] faces { get; private set; }
-
         [field: SerializeField] public float MinThrowForce = 5f;
         [field: SerializeField] public float MaxThrowForce = 15f;
         [field: SerializeField] public float MinTorqueForce = 5f;

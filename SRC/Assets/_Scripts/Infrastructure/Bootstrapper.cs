@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using _Scripts.Gameplay.Bot;
 using _Scripts.Gameplay.CubeComponent;
 using _Scripts.Gameplay.CubeRoller;
@@ -55,7 +56,7 @@ namespace _Scripts.Infrastructure
         
         public async void Initialize()
         {
-            await _warmupService.Warmup();
+            //await _warmupService.Warmup();
 
             _onPlayerConnectedAction = _ => Sync();
             _onChangeDice = _ => _queueService.ChangeTurn();

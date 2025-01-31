@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using _Scripts.Infrastructure.StaticData.Provider;
 using _Scripts.Netcore.Data.Attributes;
 using _Scripts.Netcore.Data.NetworkObjects;
 using _Scripts.Netcore.NetworkComponents.RPCComponents;
@@ -23,12 +24,12 @@ namespace _Scripts.Netcore.Spawner
         private int _uniqueId = 0;
         
         public NetworkSpawner(IObjectResolver resolver,
-            NetworkObjectsConfig networkObjectsConfig,
+            IStaticDataProvider staticDataProvider,
             INetworkObjectSyncer networkObjectSyncer,
             INetworkRunner networkRunner)
         {
             _resolver = resolver;
-            _networkObjectsConfig = networkObjectsConfig;
+            _networkObjectsConfig = staticDataProvider.NetworkObjectsConfig;
             _networkObjectSyncer = networkObjectSyncer;
             _networkRunner = networkRunner;
             _spawnMethodInfo = typeof(NetworkSpawner).GetMethod(nameof(SpawnClientRpc));
@@ -58,7 +59,7 @@ namespace _Scripts.Netcore.Spawner
             
             if (prefab.GetComponentInChildren<INetworkComponent>() == null)
                 return null;
-
+            
             if (!_networkObjectsConfig.TryGetNetworkObjectId(prefab, out int id))
                 return null;
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using _Scripts.Gameplay.CubeComponent.Data;
 using _Scripts.Infrastructure.StaticData.Provider;
@@ -13,7 +14,7 @@ namespace _Scripts.Gameplay.CubeComponent
     public class CubeRollerChecker : NetworkService, ICubeRollerChecker, IDisposable
     {
         private readonly INetworkRunner _networkRunner;
-        private readonly CubeFace[] faces; 
+        private readonly CubeFace[] _faces; 
 
         private CancellationTokenSource _cancellationTokenSource;
         private Rigidbody _rb;
@@ -27,7 +28,7 @@ namespace _Scripts.Gameplay.CubeComponent
             INetworkRunner networkRunner)
         {
             _networkRunner = networkRunner;
-            faces = staticDataProvider.CubeDiceSettings.faces;
+            _faces = staticDataProvider.CubeDiceSettings.faces;
         }
 
         public void Initialize(GameObject cube) => 
@@ -79,9 +80,9 @@ namespace _Scripts.Gameplay.CubeComponent
             float maxDot = -1f;
             int faceIndex = -1;
 
-            for (int i = 0; i < faces.Length; i++)
+            for (int i = 0; i < _faces.Length; i++)
             {
-                Vector3 worldDirection = _rb.transform.TransformDirection(faces[i].GetDirectionVector());
+                Vector3 worldDirection = _rb.transform.TransformDirection(_faces[i].GetDirectionVector());
 
                 float dot = Vector3.Dot(worldDirection, Vector3.up);
 
@@ -92,7 +93,7 @@ namespace _Scripts.Gameplay.CubeComponent
                 faceIndex = i;
             }
 
-            return faces[faceIndex].value;
+            return _faces[faceIndex].value;
         }
 
         public void Dispose() => 

@@ -46,7 +46,7 @@ namespace _Scripts.Infrastructure.Installers
             builder.Register<IDynamicProcessorService, DynamicProcessorService>(Lifetime.Singleton);
             builder.Register<INetworkInitializer, NetworkInitializer>(Lifetime.Singleton);
             builder.Register<INetworkObjectSyncer, NetworkObjectsSyncer>(Lifetime.Singleton);
-            builder.Register<INetworkSpawner, NetworkSpawner>(Lifetime.Singleton).WithParameter(_networkObjectsConfig);
+            builder.Register<INetworkSpawner, NetworkSpawner>(Lifetime.Singleton);
             
             builder.Register<ILobbyManager, LobbiesHandler>(Lifetime.Singleton);
             builder.Register<IStaticDataProvider, StaticDataProvider>(Lifetime.Singleton).WithParameter(_allData);

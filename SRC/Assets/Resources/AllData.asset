@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcfdd7c4ec7847bcb8045e78a73c8c16, type: 3}
   m_Name: AllData
   m_EditorClassIdentifier: 
-  AssetsReferences: {fileID: 11400000, guid: 022ffc2b4e3e67048971e38c8a2bf312, type: 2}
-  CubeDiceSettings: {fileID: 11400000, guid: be3d2d24dc6aec54b9acf48d9f9e0bdf, type: 2}
-  CubeRollerSettings: {fileID: 11400000, guid: 65baf8f8fe8c27c4e93676bb407a7780, type: 2}
+  AssetsReferences: {fileID: 11400000, guid: 8709676b94e1ab64cbc0b70eddda82c8, type: 2}
+  CubeDiceSettings: {fileID: 11400000, guid: 836bddb9486a55b40802c8f8a9a39565, type: 2}
+  CubeRollerSettings: {fileID: 11400000, guid: 809768d5d54a36c4391d88f24cccd185, type: 2}
+  NetworkObjectsConfig: {fileID: 11400000, guid: 3ecd473df9c22764282f2ddf0d8dfba8, type: 2}

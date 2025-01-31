@@ -438,8 +438,8 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 1442838519}
-  _networkObjectsConfig: {fileID: 11400000, guid: 43308730e81c4ba4591216416b3baaf1, type: 2}
-  _allData: {fileID: 11400000, guid: dfb02341dd111964994dd7717b49cfd6, type: 2}
+  _networkObjectsConfig: {fileID: 11400000, guid: 3ecd473df9c22764282f2ddf0d8dfba8, type: 2}
+  _allData: {fileID: 11400000, guid: a8b1a0499dddc6e47a412f8e5005bb79, type: 2}
 --- !u!114 &1069869907
 MonoBehaviour:
   m_ObjectHideFlags: 0

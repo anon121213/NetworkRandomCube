@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: CubeDiceSettings 1
-  m_EditorClassIdentifier: Assembly-CSharp:_Scripts.Infrastructure.StaticData.Data:CubeRollerSettings
-  <faces>k__BackingField: []
+  m_Script: {fileID: 11500000, guid: 158b5fd6d5ae46238ca57e93c0f73f8f, type: 3}
+  m_Name: CubeRollerSettings
+  m_EditorClassIdentifier: 
   MinThrowForce: 5
   MaxThrowForce: 15
   MinTorqueForce: 5

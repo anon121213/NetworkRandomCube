@@ -9,7 +9,6 @@ namespace _Scripts.Infrastructure.AddressableLoader
 {
     public class AssetProvider : IAssetProvider
     {
-        private readonly Dictionary<string, AsyncOperationHandle> _cache = new();
         private readonly Dictionary<string, List<AsyncOperationHandle>> _usedResources = new();
 
         public async UniTask InitializeAsset()
@@ -21,22 +20,16 @@ namespace _Scripts.Infrastructure.AddressableLoader
 
         public async UniTask<T> LoadAsync<T>(string address) where T : class
         {
-            if (_cache.TryGetValue(address, out var completedHandle))
-                return (T)completedHandle.Result;
-
             AsyncOperationHandle<T> handle = Addressables.LoadAssetAsync<T>(address);
-            RegisterCacheAndCleanup(address, handle);
+            RegisterForCleanup(address, handle);
 
             return await handle.Task;
         }
 
         public async UniTask<T> LoadAsync<T>(AssetReference assetReference) where T : class
         {
-            if (_cache.TryGetValue(assetReference.AssetGUID, out var completedHandle))
-                return (T)completedHandle.Result;
-
             AsyncOperationHandle<T> handle = Addressables.LoadAssetAsync<T>(assetReference);
-            RegisterCacheAndCleanup(assetReference.AssetGUID, handle);
+            RegisterForCleanup(assetReference.AssetGUID, handle);
 
             return await handle.Task;
         }
@@ -49,7 +42,7 @@ namespace _Scripts.Infrastructure.AddressableLoader
             foreach (var asset in handle.Result)
             {
                 var key = asset.GetType().Name;
-                RegisterCacheAndCleanup(key, handle);
+                RegisterForCleanup(key, handle);
             }
 
             return handle.Result.ToList();
@@ -60,15 +53,7 @@ namespace _Scripts.Infrastructure.AddressableLoader
             foreach (var handle in _usedResources.Values.SelectMany(resourceHandles => resourceHandles))
                 Addressables.Release(handle);
 
-            _cache.Clear();
             _usedResources.Clear();
-        }
-
-        private void RegisterCacheAndCleanup<T>(string key, AsyncOperationHandle<T> handle)
-        {
-            handle.Completed += completeHandle => _cache[key] = completeHandle;
-
-            RegisterForCleanup(key, handle);
         }
 
         private void RegisterForCleanup<T>(string guid, AsyncOperationHandle<T> handle)

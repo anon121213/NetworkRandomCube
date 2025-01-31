@@ -10,7 +10,7 @@ namespace _Scripts.Infrastructure.LobbySystem
 {
     public class LobbiesHandler : ILobbyManager, IDisposable
     {
-        private const string SERVER_URL = "http://localhost:3000";
+        private const string SERVER_URL = "http://185.125.103.42:3000";
         
         private readonly List<Lobby> _lobbies = new();
 
