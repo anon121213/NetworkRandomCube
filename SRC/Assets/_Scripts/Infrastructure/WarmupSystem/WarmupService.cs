@@ -24,7 +24,8 @@ namespace _Scripts.Infrastructure.WarmupSystem
             List<UniTask> tasks = new List<UniTask>
             {
                 _assetProvider.InitializeAsset(),
-                _assetProvider.LoadAsync<GameObject>(_staticDataProvider.AssetsReferences.ConnectPanel)
+                _assetProvider.LoadAsync<GameObject>(_staticDataProvider.AssetsReferences.ConnectPanel),
+                _assetProvider.LoadAsync<GameObject>(_staticDataProvider.AssetsReferences.Cube)
             };
 
             await UniTask.WhenAll(tasks);
